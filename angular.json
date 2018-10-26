@@ -133,6 +133,41 @@
           }
         }
       }
+    },
+    "sticky-directive": {
+      "root": "projects/sticky-directive",
+      "sourceRoot": "projects/sticky-directive/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/sticky-directive/tsconfig.lib.json",
+            "project": "projects/sticky-directive/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sticky-directive/src/test.ts",
+            "tsConfig": "projects/sticky-directive/tsconfig.spec.json",
+            "karmaConfig": "projects/sticky-directive/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sticky-directive/tsconfig.lib.json",
+              "projects/sticky-directive/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-sticky-demo"
