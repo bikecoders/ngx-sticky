@@ -145,6 +145,9 @@
           "options": {
             "tsConfig": "projects/sticky-directive/tsconfig.lib.json",
             "project": "projects/sticky-directive/ng-package.json"
+          },
+          "configurations": {
+            "production": {}
           }
         },
         "test": {

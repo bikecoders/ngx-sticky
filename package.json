@@ -5,9 +5,18 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy-gh-pages": "npm run build:prod -- --base-href 'https://bikecoders.github.io/ngx-sticky/' && angular-cli-ghpages --dir=dist/ngx-sticky-demo --branch=gh-pages",
+    "sticky:build": "ng build sticky-directive",
+    "sticky:build-prod": "ng build sticky-directive --prod",
+    "sticky:publish": "npm run sticky:build-prod && npm run sticky:publish:copy-readme && npm run sticky:publish:copy-licence && cd dist/sticky-directive && npm publish",
+    "sticky:publish:copy-readme": "copy README.md dist/sticky-directive",
+    "sticky:publish:copy-licence": "copy LICENSE dist/sticky-directive",
+    "sticky:test": "ng test sticky-directive",
+    "sticky:test:coverage": "ng test sticky-directive -- --watch=false --code-coverage"
   },
   "private": true,
   "dependencies": {
