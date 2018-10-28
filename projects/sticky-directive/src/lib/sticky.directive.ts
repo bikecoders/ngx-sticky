@@ -1,4 +1,4 @@
-import { Directive, OnInit, ElementRef, Input } from '@angular/core';
+import { Directive, OnInit, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 /**
  * This directive puts a css class in a sticky element to improve usability.
@@ -9,7 +9,7 @@ import { Directive, OnInit, ElementRef, Input } from '@angular/core';
 @Directive({
   selector: '[ngxSticky]'
 })
-export class StickyDirective implements OnInit {
+export class StickyDirective implements OnInit, AfterViewInit {
 
   /**
    * * It must be a top container of the sticky element and of the element that will trigger the custom class on the sticky element.
@@ -36,10 +36,26 @@ export class StickyDirective implements OnInit {
   }
   private _triggerOn: HTMLElement;
 
+  /**
+   * When it's on, add some styles to the sentinel element
+   */
+  @Input()
+  debugMode = false;
+
+  /**
+   * Sentinel element created
+   */
+  private sentinel: HTMLElement;
+
   constructor(private stickyElement: ElementRef) { }
 
   ngOnInit(): void {
     this.makeSticky();
+  }
+
+  ngAfterViewInit() {
+    this.putSentinel();
+    this.setObserver();
   }
 
   /**
@@ -64,6 +80,64 @@ export class StickyDirective implements OnInit {
     nativeElement.style.position = 'sticky';
     nativeElement.style.top = '0'; // TODO: input
     nativeElement.style.zIndex = '10'; // TODO: input
+  }
+
+  private setObserver() {
+    const observer = new IntersectionObserver(
+      this.onAppears.bind(this),
+      {
+        threshold: [0],
+        root: this.scrollContainer as HTMLElement
+      });
+
+    // Add the bottom sentinels to each section and attach an observer.
+    observer.observe(this.sentinel);
+  }
+
+  private onAppears(records: IntersectionObserverEntry[]) {
+    console.log('...');
+
+    // for (const record of records) {
+    //   const targetInfo = record.boundingClientRect;
+    //   const rootBoundsInfo = record.rootBounds;
+
+    //   if (targetInfo.bottom < rootBoundsInfo.top) {
+    //     console.log('put');
+    //     stickyEl.classList.add('when-sticky');
+    //   }
+
+    //   if (targetInfo.bottom >= rootBoundsInfo.top &&
+    //     targetInfo.bottom < rootBoundsInfo.bottom) {
+    //     console.log('remove');
+    //     stickyEl.classList.remove('when-sticky');
+    //   }
+    // }
+  }
+
+  /**
+   * Generates the sentinel element with the necessary styles
+   */
+  private generateSentinelElement(): HTMLElement {
+    const sentinelEl = document.createElement('div');
+    sentinelEl.style.height = '100px';
+    sentinelEl.style.width = '100%';
+    sentinelEl.style.position = 'absolute';
+    sentinelEl.style.visibility = 'hidden';
+
+    if (this.debugMode) {
+      sentinelEl.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+      sentinelEl.style.visibility = 'unset';
+    }
+
+    return sentinelEl;
+  }
+
+  /**
+   * Add the sentinel element as the first child of the triggerOn element
+   */
+  private putSentinel() {
+    const sentinel = this.generateSentinelElement();
+    this.sentinel = (this.triggerOn as HTMLElement).insertAdjacentElement('afterbegin', sentinel) as HTMLElement;
   }
 
 }

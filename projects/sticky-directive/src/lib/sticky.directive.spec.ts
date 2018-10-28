@@ -36,7 +36,13 @@ import { By } from '@angular/platform-browser';
   `],
   template: `
     <div id="body-container" #scCont>
-      <div id="sticky-component" ngxSticky [scrollContainer]="scCont">
+      <div
+        id="sticky-component"
+        ngxSticky
+        [scrollContainer]="scCont"
+        [triggerOn]="'trigger-here'"
+        [debugMode]="true"
+      >
       </div>
       <div id="trigger-here" class="super-height">
       </div>
@@ -87,7 +93,7 @@ describe('StickyDirective', () => {
     expect(nativeElement.style.zIndex).toEqual('10');
   });
 
-  describe('Elements setter', () => {
+  describe('Elements Setter', () => {
 
     describe('setHTMLElement', () => {
       it('should transform from string', () => {
@@ -128,6 +134,34 @@ describe('StickyDirective', () => {
       });
     });
 
+  });
+
+  describe('Put Sentinel', () => {
+    it('should add sentinel right after the triggerOn element', () => {
+      const firstChildDe = componentDe.query(By.css('#trigger-here'));
+      const firstChild = firstChildDe.nativeElement as HTMLElement;
+      const sentinel = firstChild.children[0] as HTMLElement;
+
+      expect(sentinel).toBe((directive as any).sentinel);
+      expect(sentinel.style.position).toBe('absolute');
+    });
+
+    describe('Debug Mode', () => {
+      it('should, on debug mode, put styles on the sentinel', () => {
+        directive.debugMode = true;
+        const sentinel = (directive as any).generateSentinelElement();
+        expect(sentinel.style.backgroundColor).toBeTruthy();
+        expect(sentinel.style.visibility).toEqual('unset');
+      });
+
+      it('should, NOT on debug mode, put styles on the sentinel', () => {
+        directive.debugMode = false;
+        directive.debugMode = false;
+        const sentinel = (directive as any).generateSentinelElement();
+        expect(sentinel.style.backgroundColor).toEqual('');
+        expect(sentinel.style.visibility).toEqual('hidden');
+      });
+    });
   });
 
 });
