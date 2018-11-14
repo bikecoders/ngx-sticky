@@ -43,6 +43,12 @@ export class StickyDirective implements OnInit, AfterViewInit {
   debugMode = false;
 
   /**
+   * When it's on, add some styles to the sentinel element
+   */
+  @Input()
+  classWhenSticky = '';
+
+  /**
    * Sentinel element created
    */
   private sentinel: HTMLElement;
@@ -82,9 +88,12 @@ export class StickyDirective implements OnInit, AfterViewInit {
     nativeElement.style.zIndex = '10'; // TODO: input
   }
 
+  /**
+   * Start listening to the scroll event on the container element
+   */
   private setObserver() {
     const observer = new IntersectionObserver(
-      this.onAppears.bind(this),
+      (records) => this.onAppears(records),
       {
         threshold: [0],
         root: this.scrollContainer as HTMLElement
@@ -94,24 +103,24 @@ export class StickyDirective implements OnInit, AfterViewInit {
     observer.observe(this.sentinel);
   }
 
+  /**
+   * Add/Remove class to the target element when the sentinel element disappear/appear
+   */
   private onAppears(records: IntersectionObserverEntry[]) {
-    console.log('...');
+    for (const record of records) {
+      const nativeElement: HTMLElement = this.stickyElement.nativeElement;
+      const targetInfo = record.boundingClientRect;
+      const rootBoundsInfo = record.rootBounds;
 
-    // for (const record of records) {
-    //   const targetInfo = record.boundingClientRect;
-    //   const rootBoundsInfo = record.rootBounds;
+      if (targetInfo.bottom < rootBoundsInfo.top) {
+        nativeElement.classList.add(this.classWhenSticky);
+      }
 
-    //   if (targetInfo.bottom < rootBoundsInfo.top) {
-    //     console.log('put');
-    //     stickyEl.classList.add('when-sticky');
-    //   }
-
-    //   if (targetInfo.bottom >= rootBoundsInfo.top &&
-    //     targetInfo.bottom < rootBoundsInfo.bottom) {
-    //     console.log('remove');
-    //     stickyEl.classList.remove('when-sticky');
-    //   }
-    // }
+      if (targetInfo.bottom >= rootBoundsInfo.top &&
+        targetInfo.bottom < rootBoundsInfo.bottom) {
+        nativeElement.classList.remove(this.classWhenSticky);
+      }
+    }
   }
 
   /**

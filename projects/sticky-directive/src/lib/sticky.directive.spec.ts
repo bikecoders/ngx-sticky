@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StickyDirective } from './sticky.directive';
 import { By } from '@angular/platform-browser';
+import { Subject, of } from 'rxjs';
+import { tap, concatMap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-dummy-component',
@@ -42,6 +44,7 @@ import { By } from '@angular/platform-browser';
         [scrollContainer]="scCont"
         [triggerOn]="'trigger-here'"
         [debugMode]="true"
+        [classWhenSticky]="'when-sticky'"
       >
       </div>
       <div id="trigger-here" class="super-height">
@@ -161,6 +164,52 @@ describe('StickyDirective', () => {
         expect(sentinel.style.backgroundColor).toEqual('');
         expect(sentinel.style.visibility).toEqual('hidden');
       });
+    });
+  });
+
+  describe('Class when sticky', () => {
+    it('should put and remove the classes when sticky', (done: DoneFn) => {
+      const indicatorSub = new Subject();
+
+      const stickyElementDe = componentDe.query(By.directive(StickyDirective));
+      const stickyElement = stickyElementDe.nativeElement as HTMLElement;
+
+      // Just make a middleware to call indicatorSub.next and indicate when the function onAppears was executed
+      (directive as any).onAppears = new Proxy(
+        (directive as any).onAppears,
+        {
+          apply: (target, thisArg, argumentsList) => {
+            target.apply(thisArg, argumentsList);
+            indicatorSub.next();
+          }
+        }
+      );
+
+      const scrollAreaDe = componentDe.query(By.css('#body-container'));
+      const scrollArea = scrollAreaDe.nativeElement as HTMLElement;
+
+      const scroll = (number: number) =>
+        scrollArea.scrollBy({
+          top: number
+        });
+
+      of({}).pipe(
+        // Scroll down 500px
+        tap(() => scroll(500)),
+        // wait until the subject indicates
+        concatMap(() => indicatorSub.asObservable().pipe(take(1))),
+        // Verify if the the element has the class
+        tap(() => expect(stickyElement.classList.contains('when-sticky')).toBeTruthy('should have the class')),
+        // Scroll up to the beginning
+        tap(() => scroll(-500)),
+        // wait until the subject indicates
+        concatMap(() => indicatorSub.asObservable()),
+        // Verify if the the element doesn't have the class
+        tap(() => expect(stickyElement.classList.contains('when-sticky')).toBeFalsy('the class should be removed')),
+      ).subscribe(
+        // Indicate that we are done
+        () => done()
+      );
     });
   });
 
