@@ -213,4 +213,28 @@ describe('StickyDirective', () => {
     });
   });
 
+  describe('zIndex and top input properties', () => {
+    let dir: StickyDirective;
+    let dirElementRef: ElementRef;
+
+    beforeEach(() => {
+      dirElementRef = { nativeElement: { style: {} } } as ElementRef;
+      dir = new StickyDirective(dirElementRef);
+    });
+
+    it('should set zIndex on target', () => {
+      expect(dir.zIndex).toEqual(10);
+      dir.zIndex = 1000;
+      (dir as any).makeSticky();
+      expect(dirElementRef.nativeElement.style.zIndex).toEqual('1000');
+    });
+
+    it('should set top on target', () => {
+      expect(dir.top).toEqual(0);
+      dir.top = 300;
+      (dir as any).makeSticky();
+      expect(dirElementRef.nativeElement.style.top).toEqual('300px');
+    });
+  });
+
 });

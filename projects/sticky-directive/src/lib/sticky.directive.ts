@@ -43,10 +43,22 @@ export class StickyDirective implements OnInit, AfterViewInit {
   debugMode = false;
 
   /**
-   * When it's on, add some styles to the sentinel element
+   * Class to be added to the target element when becomes sticky
    */
   @Input()
   classWhenSticky = '';
+
+  /**
+   * zIndex value to set to the target element
+   */
+  @Input()
+  zIndex = 10;
+
+  /**
+   * Top value to set to the target element
+   */
+  @Input()
+  top = 0;
 
   /**
    * Sentinel element created
@@ -84,8 +96,8 @@ export class StickyDirective implements OnInit, AfterViewInit {
   private makeSticky(): void {
     const nativeElement: HTMLElement = this.stickyElement.nativeElement;
     nativeElement.style.position = 'sticky';
-    nativeElement.style.top = '0'; // TODO: input
-    nativeElement.style.zIndex = '10'; // TODO: input
+    nativeElement.style.top = this.top + 'px';
+    nativeElement.style.zIndex = this.zIndex.toString();
   }
 
   /**
