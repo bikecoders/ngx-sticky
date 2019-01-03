@@ -12,7 +12,7 @@ before_deploy:
 - cd projects/sticky-directive
 after_deploy:
 - cd ../..
-- yarn upgrade ngx-sticky --force && yarn list ngx-sticky && npm run deploy-gh-pages
+- yarn upgrade ngx-input-search --force && yarn list ngx-input-search && npm run deploy-gh-pages
 deploy:
   provider: npm
   email: bikecoders@gmail.com
