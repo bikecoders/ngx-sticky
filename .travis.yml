@@ -9,7 +9,7 @@ script:
 - npm run sticky:build-prod
 before_deploy:
 - npm run sticky:publish:copy-files
-- cd dist/sticky
+- cd projects/sticky-directive
 after_deploy:
 - cd ../..
 - yarn upgrade ngx-sticky --force && yarn list ngx-sticky && npm run deploy-gh-pages
