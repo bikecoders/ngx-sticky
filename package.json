@@ -20,7 +20,11 @@
     "sticky:lint:report": "npm --silent run sticky:lint -- --format json | sed -n '1!p' > reports/lint_issues.json",
     "sticky:test": "ng test sticky-directive",
     "sticky:test:coverage": "ng test sticky-directive -- --watch=false --code-coverage --browsers=ChromeHeadless",
-    "sticky:test:sonar": "npm run sticky:lint:report && cross-env SONAR_QUBE=1 npm run sticky:test:coverage && sonar-scanner"
+    "sticky:test:sonar": "npm run sticky:lint:report && cross-env SONAR_QUBE=1 npm run sticky:test:coverage && sonar-scanner",
+    "sticky:create-version": "cd projects/sticky-directive && mkdir -p .git && npm version",
+    "sticky:create-version:patch": "npm run sticky:create-version -- patch",
+    "sticky:create-version:minor": "npm run sticky:create-version -- minor",
+    "sticky:create-version:major": "npm run sticky:create-version -- major"
   },
   "private": true,
   "dependencies": {
