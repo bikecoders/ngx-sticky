@@ -16,14 +16,6 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "sticky-directive": [
-        "dist/sticky-directive"
-      ],
-      "sticky-directive/*": [
-        "dist/sticky-directive/*"
-      ]
-    }
+    ]
   }
 }
