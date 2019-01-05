@@ -4456,6 +4456,10 @@ ng-packagr@^4.2.0:
     uglify-js "^3.0.7"
     update-notifier "^2.3.0"
 
+ngx-sticky-directive@latest:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/ngx-sticky-directive/-/ngx-sticky-directive-0.3.1.tgz#cd0734c600c99c32e415f73a755581b6860d4c96"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
