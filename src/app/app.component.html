@@ -2,6 +2,9 @@
   <h3>
     Adding custom class on element when it's sticky positioned
   </h3>
+  <button (click)="toggleDebugMode()">
+    Toggle Debug Mode {{ isDebugModeOn ? 'Off' : 'On' }}
+  </button>
   <div
     class="scroll-container"
     #scContainer
@@ -12,6 +15,7 @@
       [scrollContainer]="scContainer"
       [triggerOn]="'text-content'"
       [classWhenSticky]="'my-sticky-class'"
+      [debugMode]="isDebugModeOn"
     >
       Sticky Title
     </div>

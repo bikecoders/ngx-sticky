@@ -47,6 +47,7 @@ export class StickyDirective implements OnInit, AfterViewInit {
     this._debugMode = value;
 
     if (this._debugMode && !!this.sentinel) {
+      this.sentinel.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
       this.sentinel.style.visibility = 'unset';
     } else if (!this._debugMode && !!this.sentinel) {
       this.sentinel.style.visibility = 'hidden';
@@ -152,12 +153,12 @@ export class StickyDirective implements OnInit, AfterViewInit {
    */
   private generateSentinelElement(): HTMLElement {
     const sentinelEl = document.createElement('div');
-    sentinelEl.style.height = '100px';
+    sentinelEl.style.height = '50px';
     sentinelEl.style.width = '100%';
     sentinelEl.style.position = 'absolute';
     sentinelEl.style.visibility = 'hidden';
 
-    if (this.debugMode) {
+    if (this._debugMode) {
       sentinelEl.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
       sentinelEl.style.visibility = 'unset';
     }

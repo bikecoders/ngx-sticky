@@ -167,6 +167,7 @@ describe('StickyDirective', () => {
         let sentinel = getSentinelElementFromDom();
 
         expect(sentinel.style.visibility).toEqual('unset');
+        expect(sentinel.style.backgroundColor).toEqual('rgba(255, 0, 0, 0.5)');
 
         // Hide Sentinel
         directive.debugMode = false;
