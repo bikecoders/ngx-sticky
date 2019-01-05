@@ -14,6 +14,7 @@ export class StickyDirective implements OnInit, AfterViewInit {
   /**
    * * It must be a top container of the sticky element and of the element that will trigger the custom class on the sticky element.
    * * This should be the element with the scroll
+   * If an string is provided, it must be the ID of the element.
    */
   @Input()
   get scrollContainer(): string | ElementRef | HTMLElement {
@@ -25,7 +26,8 @@ export class StickyDirective implements OnInit, AfterViewInit {
   private _scrollContainer: HTMLElement;
 
   /**
-   * Element that will trigger the custom class on the sticky element.
+   * When the sticky element bypass this element the custom class will apply.
+   * If an string is provided, it must be the ID of the element.
    */
   @Input()
   get triggerOn(): string | ElementRef | HTMLElement {

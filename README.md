@@ -15,9 +15,9 @@ Angular directive that adds sticky position to an HTML element and also applies 
 <div #scContainer>
   <div
     ngxSticky
+    classWhenSticky="my-sticky-class"
+    triggerOn="text-content"
     [scrollContainer]="scContainer"
-    [triggerOn]="'text-content'"
-    [classWhenSticky]="'my-sticky-class'"
   >
     Sticky Title
   </div>
@@ -26,9 +26,18 @@ Angular directive that adds sticky position to an HTML element and also applies 
   </div>
 </div>
 ```
-> TODO: create a GIF to display briefly how it works
+[![Quick Demo](https://raw.githubusercontent.com/bikecoders/ngx-sticky/master/docs-img/demo-capture.gif)]()
 
-### How to use it
+## How to use it
+
+To accomplish the desired behavior you need to take in account the following:
+  - You need to have a scroll container
+  - Inside the scroll container you need:
+    - The sticky element
+    - An element that when the sticky element bypass it, the directive will trigger the custom class. We call this _triggerOn_ element
+  - The _triggerOn_ element **must** be relative positioned (has this css property `position: relative`)
+    - > _We decided that you control this, because adding `position: relative` to an element can change the visual aspect to something not desired and you will asking why and blaming yourself for something that you are not conscious of, so following the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle) this directive will not take care of that_
+
 `dummy.component.scss`
 ```scss
 .scroll-container {
@@ -47,26 +56,29 @@ Angular directive that adds sticky position to an HTML element and also applies 
   padding: 16px;
 }
 
+.trigger-on {
+  position: relative;
+}
+
 .my-sticky-class {
-  background-color: #891E1C !important;
+  background-color: #1C8950 !important;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
 }
 ```
-
 
 `dummy.component.html`
 ```html
 <div #scContainer>
   <div
     ngxSticky
-    [scrollContainer]="scContainer"
-    [triggerOn]="'text-content'"
-    [classWhenSticky]="'my-sticky-class'"
     class="title"
+    triggerOn="trigger-on"
+    classWhenSticky="my-sticky-class"
+    [scrollContainer]="scContainer"
   >
     Sticky Title
   </div>
-  <div id="text-content">
+  <div id="trigger-on" class="trigger-on">
     ...Insert a lot of content here
   </div>
 </div>
@@ -110,7 +122,7 @@ export class AppModule { }
 @Component({
   selector: 'dummy-component',
   styles: [`
-    #body-container {
+    .body-container {
       background-color: yellow;
       height: 2000px;
       overflow: scroll;
@@ -137,16 +149,16 @@ export class AppModule { }
     }
   `],
   template: `
-    <div id="body-container" #scCont>
+    <div class="body-container" #scCont>
       <div
         id="sticky-component"
         ngxSticky
+        classWhenSticky="when-sticky"
+        triggerOn="trigger-on"
         [scrollContainer]="scCont"
-        [triggerOn]="'trigger-here'"
-        [classWhenSticky]="'when-sticky'"
       >
       </div>
-      <div id="trigger-here" class="super-height">
+      <div id="trigger-on" class="super-height">
       </div>
     </div>
   `,
@@ -159,17 +171,24 @@ class DummyComponent {
 
 | Name  | Description |
 | :---- | :---------- |
-| `@Input() scrollContainer: string | ElementRef | HTMLElement` | Top container of the sticky element that has the scroll. |
-| `@Input() triggerOn: string | ElementRef | HTMLElement` | Element that will trigger the custom class on the sticky element. |
+| `@Input() scrollContainer: string | ElementRef | HTMLElement` | Top container of the sticky element that has the scroll. _If an string is provided, it must be the ID of the element._ |
+| `@Input() triggerOn: string | ElementRef | HTMLElement` | When the sticky element bypass this element the custom class will apply. _If an string is provided, it must be the ID of the element._ |
 | `@Input() debugMode: boolean` | Display or hide the sentinel element. |
-| `@Input() classWhenSticky: string` | Class to be added to the target element when becomes sticky. |
-| `@Input() zIndex: number = 10` | zIndex value to set to the target element. By default is 10. |
-| `@Input() top: number = 0` | Top value to set to the target element. By default is 0. |
+| `@Input() classWhenSticky: string` | CSS class to be added to the target element when becomes sticky. |
+| `@Input() zIndex: number = 10` | CSS `zIndex` value to set to the target element. By default is 10. |
+| `@Input() top: number = 0` | CSS `top` value to set to the sticky element. By default is 0. |
 
 ## Why?
 
-Adding a custom class when an element becomes sticky is the objective of this directive. This is achieved by using Intersection Observer and avoid scroll events to keep a good performance.
-This directive adds an element (which we called Sentinel) on top of the element that will trigger the sticky behavior, whit our sentinel and using intersection observer we can determine when the sticky mode enters and exits.
+Adding a custom class when an element becomes sticky is the objective of this directive. This is achieved by using [Intersection Observer](https://developer.mozilla.org/docs/Web/API/Intersection_Observer_API) and avoid using scroll events to keep a good performance.
+
+## How it works
+
+We don't want to use scroll events to detect when an element becomes sticky on the screen for performance reasons. That why we decided to use Interception Observer.
+
+The Interception Observer is preferably applied to an element that has a scroll and it detects when a child element enters or exits the screen. So we add an invisible sentinel element to that scroll container and when it exists the screen we know when the sticky element start to be sticky, when the sentinel enters again the sticky element is not longer sticky. In our demo you can toggle the visibility of the sentinel and check how the intersection occurs.
+
+The intention of this directive is to implement the article [An event for CSS position:sticky](https://developers.google.com/web/updates/2017/09/sticky-headers) in an Angular way.
 
 ### References
 - [An event for CSS position:sticky](https://developers.google.com/web/updates/2017/09/sticky-headers)
