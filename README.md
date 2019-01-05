@@ -1,8 +1,11 @@
-
-
 # ngx-sticky-directive
 
-> TODO: Create badges
+[![npm version](https://badge.fury.io/js/ngx-sticky-directive.svg)](https://badge.fury.io/js/ngx-sticky-directive) [![Build Status](https://travis-ci.org/bikecoders/ngx-sticky.svg?branch=master)](https://travis-ci.org/bikecoders/ngx-sticky)
+
+[![coverage](https://sonarcloud.io/api/project_badges/measure?project=bikecoders_ngx-sticky&metric=coverage)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky) [![reliability rating](https://sonarcloud.io/api/project_badges/measure?project=bikecoders_ngx-sticky&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky) [![security rating](https://sonarcloud.io/api/project_badges/measure?project=bikecoders_ngx-sticky&metric=security_rating)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky) [![scale rating](https://sonarcloud.io/api/project_badges/measure?project=bikecoders_ngx-sticky&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky)
+
+[![Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=bikecoders_ngx-sticky)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky) [![Sonar Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky)
+
 
 ## TL;DR:
 
