@@ -2,15 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { StickyDirective } from 'sticky-directive';
+import { StickyDirectiveModule } from 'sticky-directive';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    StickyDirective
+    AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    StickyDirectiveModule
   ],
   providers: [],
   bootstrap: [AppComponent]
