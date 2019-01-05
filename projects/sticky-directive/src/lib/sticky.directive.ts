@@ -40,7 +40,19 @@ export class StickyDirective implements OnInit, AfterViewInit {
    * When it's on, add some styles to the sentinel element
    */
   @Input()
-  debugMode = false;
+  public get debugMode() {
+    return this._debugMode;
+  }
+  public set debugMode(value) {
+    this._debugMode = value;
+
+    if (this._debugMode && !!this.sentinel) {
+      this.sentinel.style.visibility = 'unset';
+    } else if (!this._debugMode && !!this.sentinel) {
+      this.sentinel.style.visibility = 'hidden';
+    }
+  }
+  private _debugMode = false;
 
   /**
    * Class to be added to the target element when becomes sticky

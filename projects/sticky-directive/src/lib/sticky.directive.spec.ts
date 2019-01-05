@@ -141,11 +141,8 @@ describe('StickyDirective', () => {
 
   describe('Put Sentinel', () => {
     it('should add sentinel right after the triggerOn element', () => {
-      const firstChildDe = componentDe.query(By.css('#trigger-here'));
-      const firstChild = firstChildDe.nativeElement as HTMLElement;
-      const sentinel = firstChild.children[0] as HTMLElement;
-
-      expect(sentinel).toBe((directive as any).sentinel);
+      const sentinel = getSentinelElementFromDom();
+      expect(sentinel).toEqual((directive as any).sentinel);
       expect(sentinel.style.position).toBe('absolute');
     });
 
@@ -159,12 +156,32 @@ describe('StickyDirective', () => {
 
       it('should, NOT on debug mode, put styles on the sentinel', () => {
         directive.debugMode = false;
-        directive.debugMode = false;
         const sentinel = (directive as any).generateSentinelElement();
         expect(sentinel.style.backgroundColor).toEqual('');
         expect(sentinel.style.visibility).toEqual('hidden');
       });
+
+      it('should update styles on sentinel based on debug mode', () => {
+        // Show Sentinel
+        directive.debugMode = true;
+        let sentinel = getSentinelElementFromDom();
+
+        expect(sentinel.style.visibility).toEqual('unset');
+
+        // Hide Sentinel
+        directive.debugMode = false;
+        sentinel = getSentinelElementFromDom();
+
+        expect(sentinel.style.visibility).toEqual('hidden');
+      });
     });
+
+    function getSentinelElementFromDom(): HTMLElement {
+      fixture.detectChanges();
+      const firstChildDe = componentDe.query(By.css('#trigger-here'));
+      const firstChild = firstChildDe.nativeElement as HTMLElement;
+      return firstChild.children[0] as HTMLElement;
+    }
   });
 
   describe('Class when sticky', () => {
