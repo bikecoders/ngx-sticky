@@ -135,6 +135,14 @@ describe('StickyDirective', () => {
         directive.triggerOn = 'trigger-here';
         expect(setHTMLElementSpy).toHaveBeenCalledWith('_triggerOn', 'trigger-here');
       });
+
+      it('should set debug mode correctly', () => {
+        directive.debugMode = true;
+        expect(directive.debugMode).toBeTruthy();
+
+        directive.debugMode = false;
+        expect(directive.debugMode).toBeFalsy();
+      });
     });
 
   });
