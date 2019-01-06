@@ -2,9 +2,15 @@
   "name": "ngx-sticky-directive",
   "version": "1.0.0",
   "license": "MIT",
-  "description": "TODO",
+  "description": "Angular directive that adds sticky position to an HTML element and also applies and remove a custom class when the element is sticky positioned",
   "keywords": [
-    "TODO"
+    "angular library",
+    "angular",
+    "library",
+    "ngx",
+    "sticky",
+    "sticky element",
+    "Intersection Observer"
   ],
   "repository": {
     "url": "https://github.com/bikecoders/ngx-sticky.git",
