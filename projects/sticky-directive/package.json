@@ -25,8 +25,8 @@
     "url": "https://github.com/bikecoders/ngx-sticky/issues"
   },
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0"
+    "@angular/common": "^7.2.1",
+    "@angular/core": "^7.2.1"
   },
   "homepage": "https://github.com/bikecoders/ngx-sticky#readme",
   "readmeFilename": "README.md"

@@ -193,3 +193,9 @@ The intention of this directive is to implement the article [An event for CSS po
 ### References
 - [An event for CSS position:sticky](https://developers.google.com/web/updates/2017/09/sticky-headers)
 - [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Creating_an_intersection_observer)
+
+
+## Development tips
+
+If you want to contribute with features, we recommend to read the section that we wrote about Development Tips that is in the
+[Wiki](https://github.com/bikecoders/ngx-sticky/wiki#development-tips)
