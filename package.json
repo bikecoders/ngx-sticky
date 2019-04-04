@@ -38,6 +38,7 @@
     "@angular/platform-browser-dynamic": "~7.2.1",
     "@angular/router": "~7.2.1",
     "core-js": "^2.6.2",
+    "intersection-observer": "^0.5.1",
     "ngx-sticky-directive": "1.0.1",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.28"

@@ -3347,6 +3347,11 @@ interpret@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
 
+intersection-observer@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.5.1.tgz#e340fc56ce74290fe2b2394d1ce88c4353ac6dfa"
+  integrity sha512-Zd7Plneq82kiXFixs7bX62YnuZ0BMRci9br7io88LwDyF3V43cQMI+G5IiTlTNTt+LsDUppl19J/M2Fp9UkH6g==
+
 invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
@@ -4617,9 +4622,10 @@ ng-packagr@^4.6.0:
     uglify-js "^3.0.7"
     update-notifier "^2.3.0"
 
-ngx-sticky-directive@latest:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/ngx-sticky-directive/-/ngx-sticky-directive-0.3.2.tgz#85070fccb6a5036a10848b78f901e95d25d10fb7"
+ngx-sticky-directive@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-sticky-directive/-/ngx-sticky-directive-1.0.1.tgz#35085ecf1b8a1627bc024c0aeb40c0af35d9905d"
+  integrity sha512-234qyyvVxtddqi6NN3q/UzfC31+ZIZX7BbHTuBqpBjSaHLdhbyuYlF9NWY4LdaKu6EqCBpqDsNZ4oKqUfF1zhA==
   dependencies:
     tslib "^1.9.0"
 
