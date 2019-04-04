@@ -1,3 +1,6 @@
+// Load the polyfill
+require('intersection-observer');
+
 import { Directive, OnInit, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 /**
