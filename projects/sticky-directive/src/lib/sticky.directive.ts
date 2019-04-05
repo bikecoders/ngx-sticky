@@ -1,5 +1,5 @@
-// Import the polyfill if needed
-import * as IOPolyfill from './polyfill/add-io';
+// Import the Intersection Observer polyfill
+require('intersection-observer');
 
 import { Directive, OnInit, ElementRef, Input, AfterViewInit } from '@angular/core';
 
@@ -114,8 +114,8 @@ export class StickyDirective implements OnInit, AfterViewInit {
   private makeSticky() {
     const nativeElement: HTMLElement = this.stickyElement.nativeElement;
 
-    this.setStylePropertyToElement(nativeElement, 'position', 'sticky');
     this.setStylePropertyToElement(nativeElement, 'position', '-webkit-sticky');
+    this.setStylePropertyToElement(nativeElement, 'position', 'sticky');
     this.setStylePropertyToElement(nativeElement, 'top', `${this.top}px`);
     this.setStylePropertyToElement(nativeElement, 'zIndex', this.zIndex.toString());
   }
