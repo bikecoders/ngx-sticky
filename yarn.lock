@@ -4661,10 +4661,10 @@ ng-packagr@^4.6.0:
     uglify-js "^3.0.7"
     update-notifier "^2.3.0"
 
-ngx-sticky-directive@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-sticky-directive/-/ngx-sticky-directive-1.0.1.tgz#35085ecf1b8a1627bc024c0aeb40c0af35d9905d"
-  integrity sha512-234qyyvVxtddqi6NN3q/UzfC31+ZIZX7BbHTuBqpBjSaHLdhbyuYlF9NWY4LdaKu6EqCBpqDsNZ4oKqUfF1zhA==
+ngx-sticky-directive@latest:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/ngx-sticky-directive/-/ngx-sticky-directive-1.2.2.tgz#4cd23e981dd9e18147e2cbd3c700ff02dce7e1b1"
+  integrity sha512-dEnClioATp9W0gv/Fmi2sEKD5UE0TQbBcMsKSlnp5vDHU3KEI2pwabsahCrw8hZsg4sHEWf7KhGtGJ2GyLtHPg==
   dependencies:
     tslib "^1.9.0"
 
