@@ -1,10 +1,11 @@
+import { By } from '@angular/platform-browser';
 import { Component, DebugElement, ViewChild, ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StickyDirective } from './sticky.directive';
-import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
 import { tap, concatMap, take } from 'rxjs/operators';
+
+import { StickyDirective } from './sticky.directive';
 
 @Component({
   selector: 'ngx-dummy-component',
@@ -27,7 +28,6 @@ import { tap, concatMap, take } from 'rxjs/operators';
       background-color: green;
       height: 50px;
       width: 100%;
-      position: sticky;
       top: -10px;
       z-index: 10;
     }
@@ -84,16 +84,48 @@ describe('StickyDirective', () => {
     fixture.detectChanges();
   });
 
-
   it('should create a Sticky directive instance', () => {
     expect(directive).toBeTruthy();
   });
 
-  it('should add sticky css prop', () => {
-    const nativeElement: HTMLElement = directiveDe.nativeElement;
-    expect(nativeElement.style.position).toEqual('sticky');
-    expect(nativeElement.style.top).toEqual('0px');
-    expect(nativeElement.style.zIndex).toEqual('10');
+  describe('Add css properties to sticky element', () => {
+
+    it('should set style property correctly', () => {
+      const fn = (directive as any).setStylePropertyToElement;
+      const el = {
+        style: {}
+      } as HTMLElement;
+      const property = 'zIndex';
+      const value = '1000';
+
+      fn(el, property, value);
+
+      expect(el.style.zIndex).toEqual(value);
+    });
+
+    describe('Properties', () => {
+      let setPropertySpy: jasmine.Spy;
+      let nativeEl: HTMLElement;
+
+      beforeEach(() => {
+        setPropertySpy = spyOn(directive as any, 'setStylePropertyToElement');
+        (directive as any).makeSticky();
+        nativeEl = (directive as any).stickyElement.nativeElement;
+      });
+
+      it('should add sticky', () => {
+        expect(setPropertySpy).toHaveBeenCalledWith(nativeEl, 'position', 'sticky');
+        expect(setPropertySpy).toHaveBeenCalledWith(nativeEl, 'position', '-webkit-sticky');
+      });
+
+      it('should add top', () => {
+        expect(setPropertySpy).toHaveBeenCalledWith(nativeEl, 'top', '0px');
+      });
+
+      it('should add zIndex', () => {
+        expect(setPropertySpy).toHaveBeenCalledWith(nativeEl, 'zIndex', '10');
+      });
+    });
   });
 
   describe('Elements Setter', () => {
@@ -238,29 +270,4 @@ describe('StickyDirective', () => {
       );
     });
   });
-
-  describe('zIndex and top input properties', () => {
-    let dir: StickyDirective;
-    let dirElementRef: ElementRef;
-
-    beforeEach(() => {
-      dirElementRef = { nativeElement: { style: {} } } as ElementRef;
-      dir = new StickyDirective(dirElementRef);
-    });
-
-    it('should set zIndex on target', () => {
-      expect(dir.zIndex).toEqual(10);
-      dir.zIndex = 1000;
-      (dir as any).makeSticky();
-      expect(dirElementRef.nativeElement.style.zIndex).toEqual('1000');
-    });
-
-    it('should set top on target', () => {
-      expect(dir.top).toEqual(0);
-      dir.top = 300;
-      (dir as any).makeSticky();
-      expect(dirElementRef.nativeElement.style.top).toEqual('300px');
-    });
-  });
-
 });
