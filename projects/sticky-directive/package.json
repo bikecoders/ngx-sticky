@@ -1,6 +1,6 @@
 {
   "name": "ngx-sticky-directive",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "license": "MIT",
   "description": "Angular directive that adds sticky position to an HTML element and also applies and remove a custom class when the element is sticky positioned",
   "keywords": [
