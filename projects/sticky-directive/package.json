@@ -29,6 +29,9 @@
     "@angular/core": "^7.2.1",
     "intersection-observer": "^0.5.1"
   },
+  "dependencies": {
+    "intersection-observer": "^0.5.1"
+  },
   "homepage": "https://github.com/bikecoders/ngx-sticky#readme",
   "readmeFilename": "README.md"
 }
