@@ -1,3 +1,6 @@
+// Import the polyfill if needed
+import * as IOPolyfill from './polyfill/add-io';
+
 import { Directive, OnInit, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 /**
