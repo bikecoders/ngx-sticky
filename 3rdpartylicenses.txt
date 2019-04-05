@@ -1,3 +1,6 @@
+intersection-observer
+W3C-20150513
+
 tslib
 Apache-2.0
 Apache License
