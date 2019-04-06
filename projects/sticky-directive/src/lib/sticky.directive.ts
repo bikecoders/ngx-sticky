@@ -1,6 +1,3 @@
-// Import the Intersection Observer polyfill
-require('intersection-observer');
-
 import { Directive, OnInit, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 /**
@@ -83,7 +80,10 @@ export class StickyDirective implements OnInit, AfterViewInit {
    */
   private sentinel: HTMLElement;
 
-  constructor(private stickyElement: ElementRef) { }
+  constructor(private stickyElement: ElementRef) {
+    // Import the Intersection Observer polyfill
+    require('intersection-observer');
+  }
 
   ngOnInit(): void {
     this.makeSticky();
