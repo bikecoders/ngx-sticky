@@ -11,8 +11,8 @@
     "e2e": "ng e2e",
     "serve:development-compilation": "npm run sticky:build && npm run build && npm run serve:compilation",
     "serve:production-compilation": "npm run sticky:build-prod && npm run build:prod && npm run serve:compilation",
-    "serve:compilation": "angular-http-server -p 8080 --path './dist/ngx-sticky-demo/'",
-    "deploy-gh-pages": "npm run build:prod -- --base-href 'https://bikecoders.github.io/ngx-sticky/' && angular-cli-ghpages --repo=https://GH_TOKEN@github.com/bikecoders/ngx-sticky.git --dir=dist/ngx-sticky-demo --branch=gh-pages --name='bikecoders' --email='bikecoders@gmail.com'",
+    "serve:compilation": "angular-http-server -p 8080 --path './dist/browser/'",
+    "deploy-gh-pages": "npm run build:prod -- --base-href 'https://bikecoders.github.io/ngx-sticky/' && angular-cli-ghpages --repo=https://GH_TOKEN@github.com/bikecoders/ngx-sticky.git --dir=dist/browser --branch=gh-pages --name='bikecoders' --email='bikecoders@gmail.com'",
     "sticky:build": "ng build sticky-directive",
     "sticky:build-prod": "ng build sticky-directive --prod",
     "sticky:publish": "npm run sticky:build-prod && npm run sticky:publish:copy-readme && npm run sticky:publish:copy-licence && cd dist/sticky-directive && npm publish",
@@ -27,7 +27,11 @@
     "sticky:create-version": "cd projects/sticky-directive && mkdir -p .git && npm version",
     "sticky:create-version:patch": "npm run sticky:create-version -- patch",
     "sticky:create-version:minor": "npm run sticky:create-version -- minor",
-    "sticky:create-version:major": "npm run sticky:create-version -- major"
+    "sticky:create-version:major": "npm run sticky:create-version -- major",
+    "compile:server": "webpack --config webpack.server.config.js --progress --colors",
+    "serve:ssr": "node dist/server",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
+    "build:client-and-server-bundles": "ng build --prod && ng run ngx-sticky-demo:server:production"
   },
   "private": true,
   "dependencies": {
@@ -39,9 +43,13 @@
     "@angular/http": "~7.2.1",
     "@angular/platform-browser": "~7.2.1",
     "@angular/platform-browser-dynamic": "~7.2.1",
+    "@angular/platform-server": "~7.2.1",
     "@angular/router": "~7.2.1",
+    "@nguniversal/express-engine": "~7.1.1",
+    "@nguniversal/module-map-ngfactory-loader": "~7.1.1",
     "core-js": "^2.6.2",
-    "intersection-observer": "^0.5.1",
+    "express": "^4.15.2",
+    "intersection-observer": "^0.7.0",
     "ngx-sticky-directive": "latest",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.28"
@@ -52,6 +60,7 @@
     "@angular/cli": "~7.2.2",
     "@angular/compiler-cli": "~7.2.1",
     "@angular/language-service": "~7.2.1",
+    "@types/express": "^4.17.2",
     "@types/jasmine": "~3.3.7",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^11.13.0",
@@ -71,10 +80,12 @@
     "ng-packagr": "^4.6.0",
     "protractor": "~5.4.0",
     "sonar-scanner": "^3.1.0",
+    "ts-loader": "^5.2.0",
     "ts-node": "~7.0.0",
     "tsickle": ">=0.29.0",
     "tslib": "^1.9.0",
     "tslint": "~5.12.1",
-    "typescript": "~3.2.4"
+    "typescript": "~3.2.4",
+    "webpack-cli": "^3.1.0"
   }
 }

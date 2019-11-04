@@ -9,7 +9,7 @@ import { StickyDirectiveModule } from 'ngx-sticky-directive';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     StickyDirectiveModule
   ],
   providers: [],
