@@ -1,4 +1,5 @@
-import { Directive, OnInit, ElementRef, Input, AfterViewInit } from '@angular/core';
+import { Directive, OnInit, ElementRef, Input, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 /**
  * This directive puts a css class in a sticky element to improve usability.
@@ -6,6 +7,7 @@ import { Directive, OnInit, ElementRef, Input, AfterViewInit } from '@angular/co
  * Here you can understand better the architecture:
  * https://developers.google.com/web/updates/2017/09/sticky-headers
  */
+/** @dynamic */
 @Directive({
   selector: '[ngxSticky]'
 })
@@ -80,7 +82,11 @@ export class StickyDirective implements OnInit, AfterViewInit {
    */
   private sentinel: HTMLElement;
 
-  constructor(private stickyElement: ElementRef) {
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: object,
+    private stickyElement: ElementRef,
+  ) {
     // Import the Intersection Observer polyfill
     require('intersection-observer');
   }
@@ -91,7 +97,9 @@ export class StickyDirective implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.putSentinel();
-    this.setObserver();
+    if (isPlatformBrowser(this.platformId)) {
+      this.setObserver();
+    }
   }
 
   /**
@@ -99,7 +107,7 @@ export class StickyDirective implements OnInit, AfterViewInit {
    */
   private setHTMLElement(prop: string, value: string | ElementRef | HTMLElement): void {
     if (typeof value === 'string') {
-      this[prop] = document.getElementById(value);
+      this[prop] = this.document.getElementById(value);
     } else if (value instanceof ElementRef) {
       this[prop] = value.nativeElement;
     } else {
@@ -163,7 +171,7 @@ export class StickyDirective implements OnInit, AfterViewInit {
    * Generates the sentinel element with the necessary styles
    */
   private generateSentinelElement(): HTMLElement {
-    const sentinelEl = document.createElement('div');
+    const sentinelEl = this.document.createElement('div');
     sentinelEl.style.height = '50px';
     sentinelEl.style.width = '100%';
     sentinelEl.style.position = 'absolute';
