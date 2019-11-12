@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
 node_js:
-- node
+- "10.17"
 before_script:
 - npm --silent run sticky:test:sonar -- -Dsonar.organization=bikecoders -Dsonar.host.url=https://sonarcloud.io
   -Dsonar.login=$SONARCLOUD_TOKEN
