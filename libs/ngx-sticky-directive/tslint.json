@@ -1,0 +1,20 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "ngxStickyDirective",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "ngx-sticky-directive",
+      "kebab-case"
+    ]
+  },
+  "linterOptions": {
+    "exclude": ["!**/*"]
+  }
+}

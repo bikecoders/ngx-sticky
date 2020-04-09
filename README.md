@@ -6,8 +6,7 @@
 
 [![Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=bikecoders_ngx-sticky)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky) [![Sonar Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=bikecoders_ngx-sticky)
 
-
-## TL;DR:
+## TL;DR
 
 Angular directive that adds sticky position to an HTML element and also applies and remove a custom class when the element is sticky positioned.
 
@@ -16,7 +15,7 @@ Angular directive that adds sticky position to an HTML element and also applies 
   <div
     ngxSticky
     classWhenSticky="my-sticky-class"
-    triggerOn="text-content"
+    [triggerOn]="'text-content'"
     [scrollContainer]="scContainer"
   >
     Sticky Title
@@ -26,19 +25,22 @@ Angular directive that adds sticky position to an HTML element and also applies 
   </div>
 </div>
 ```
-[![Quick Demo](https://raw.githubusercontent.com/bikecoders/ngx-sticky/master/docs-img/demo-capture.gif)]()
+
+![Quick Demo](https://raw.githubusercontent.com/bikecoders/ngx-sticky/master/docs-img/demo-capture.gif)
 
 ## How to use it
 
 To accomplish the desired behavior you need to take in account the following:
-  - You need to have a scroll container
-  - Inside the scroll container you need:
-    - The sticky element
-    - An element that when the sticky element bypass it, the directive will trigger the custom class. We call this _triggerOn_ element
-  - The _triggerOn_ element **must** be relative positioned (has this css property `position: relative`)
-    - > _We decided that you control this, because adding `position: relative` to an element can change the visual aspect to something not desired and you will asking why and blaming yourself for something that you are not conscious of, so following the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle) this directive will not take care of that_
+
+- You need to have a scroll container
+- Inside the scroll container you need:
+  - The sticky element
+  - An element that when the sticky element bypass it, the directive will trigger the custom class. We call this _triggerOn_ element
+- The _triggerOn_ element **must** be relative positioned (has this css property `position: relative`)
+  - > _We decided that you control this, because adding `position: relative` to an element can change the visual aspect to something not desired and you will asking why and blaming yourself for something that you are not conscious of, so following the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle) this directive will not take care of that_
 
 `dummy.component.scss`
+
 ```scss
 .scroll-container {
   border: #cccccc 1px solid;
@@ -67,12 +69,13 @@ To accomplish the desired behavior you need to take in account the following:
 ```
 
 `dummy.component.html`
+
 ```html
 <div #scContainer>
   <div
     ngxSticky
     class="title"
-    triggerOn="trigger-on"
+    [triggerOn]="'trigger-on'"
     classWhenSticky="my-sticky-class"
     [scrollContainer]="scContainer"
   >
@@ -84,116 +87,125 @@ To accomplish the desired behavior you need to take in account the following:
 </div>
 ```
 
-## Demo
-- online demo: https://bikecoders.github.io/ngx-sticky/
-- [demo-app](https://github.com/bikecoders/ngx-sticky/tree/master/src): Source code available
+### Note
 
+If you're using angular version >= 9 and providing the `triggerOn` value as a string, you need to do it this way  `[triggerOn]="'text-content'"` because Ivy changed something about how we pass parameters. There is an [issue](https://github.com/angular/angular/issues/34227) open about it
+
+According to [Ivy Compatibility guide](https://angular.io/guide/ivy-compatibility)
+> Unbound inputs for directives (e.g. name in <my-comp name="">) are now set upon creation of the view, before change detection runs (previously, all inputs were set during change detection).
+
+## Demo
+
+- [online demo](https://bikecoders.github.io/ngx-sticky/)
+- [demo-app](https://github.com/bikecoders/ngx-sticky/tree/master/src): Source code available
 
 ## Getting started
 
 1. Install `ngx-sticky-directive`:
 
-```bash
-# using npm
-npm install ngx-sticky-directive --save
+   ```bash
+   # using npm
+   npm install ngx-sticky-directive --save
 
-# using yarn <3
-yarn add ngx-sticky-directive
-```
+   # using yarn
+   yarn add ngx-sticky-directive
+   ```
 
 2. Import the installed library:
 
-```ts
-import { StickyDirectiveModule } from 'ngx-sticky-directive';
+   ```ts
+   import { StickyDirectiveModule } from 'ngx-sticky-directive';
 
-@NgModule({
-  ...
-  imports: [
-    ...
-    StickyDirectiveModule
-  ]
-})
-export class AppModule { }
-```
+   @NgModule({
+     ...
+     imports: [
+       ...
+       StickyDirectiveModule
+     ]
+   })
+   export class AppModule { }
+   ```
 
 3. Use it in your component
 
-```ts
-@Component({
-  selector: 'dummy-component',
-  styles: [`
-    .body-container {
-      background-color: yellow;
-      height: 2000px;
-      overflow: scroll;
-      padding: 10px;
-    }
+   ```ts
+   @Component({
+     selector: 'dummy-component',
+     styles: [`
+       .body-container {
+         background-color: yellow;
+         height: 2000px;
+         overflow: scroll;
+         padding: 10px;
+       }
 
-    .super-height {
-      background-color: black;
-      height: 5000px;
-      position: relative;
-      width: 100%;
-    }
+       .super-height {
+         background-color: black;
+         height: 5000px;
+         position: relative;
+         width: 100%;
+       }
 
-    #sticky-component {
-      background-color: green;
-      height: 50px;
-      width: 100%;
-      top: -10px;
-      z-index: 10;
-    }
+       #sticky-component {
+         background-color: green;
+         height: 50px;
+         width: 100%;
+         top: -10px;
+         z-index: 10;
+       }
 
-    .when-sticky {
-      background-color: magenta !important;
-    }
-  `],
-  template: `
-    <div class="body-container" #scCont>
-      <div
-        id="sticky-component"
-        ngxSticky
-        classWhenSticky="when-sticky"
-        triggerOn="trigger-on"
-        [scrollContainer]="scCont"
-      >
-      </div>
-      <div id="trigger-on" class="super-height">
-      </div>
-    </div>
-  `,
-})
-class DummyComponent {
-}
-```
+       .when-sticky {
+         background-color: magenta !important;
+       }
+     `],
+     template: `
+       <div class="body-container" #scCont>
+         <div
+           id="sticky-component"
+           ngxSticky
+           classWhenSticky="when-sticky"
+           [triggerOn]="'trigger-on'"
+           [scrollContainer]="scCont"
+         >
+         </div>
+         <div id="trigger-on" class="super-height">
+         </div>
+       </div>
+     `,
+   })
+   class DummyComponent {
+   }
+   ```
 
 ## Properties
 
-| Name  | Description |
-| :---- | :---------- |
-| `@Input() scrollContainer: string | ElementRef | HTMLElement` | Top container of the sticky element that has the scroll. _If an string is provided, it must be the ID of the element._ |
-| `@Input() triggerOn: string | ElementRef | HTMLElement` | When the sticky element bypass this element the custom class will apply. _If an string is provided, it must be the ID of the element._ |
-| `@Input() debugMode: boolean` | Display or hide the sentinel element. |
-| `@Input() classWhenSticky: string` | CSS class to be added to the target element when becomes sticky. |
-| `@Input() zIndex: number = 10` | CSS `zIndex` value to set to the target element. By default is 10. |
-| `@Input() top: number = 0` | CSS `top` value to set to the sticky element. By default is 0. |
+| Name                                                          | Description                                                                                                                            |
+| :------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------- |
+| `@Input() scrollContainer: string | ElementRef | HTMLElement` | Top container of the sticky element that has the scroll. _If an string is provided, it must be the ID of the element._                 |
+| `@Input() triggerOn: string | ElementRef | HTMLElement`       | When the sticky element bypass this element the custom class will apply. _If an string is provided, it must be the ID of the element._ |
+| `@Input() debugMode: boolean`                                 | Display or hide the sentinel element.                                                                                                  |
+| `@Input() classWhenSticky: string`                            | CSS class to be added to the target element when becomes sticky.                                                                       |
+| `@Input() zIndex: number = 10`                                | CSS `zIndex` value to set to the target element. By default is 10.                                                                     |
+| `@Input() top: number = 0`                                    | CSS `top` value to set to the sticky element. By default is 0.                                                                         |
 
-## Why?
+## Why
 
 Adding a custom class when an element becomes sticky is the objective of this directive. This is achieved by using [Intersection Observer](https://developer.mozilla.org/docs/Web/API/Intersection_Observer_API) and avoid using scroll events to keep a good performance.
 
 ## How it works
 
-We don't want to use scroll events to detect when an element becomes sticky on the screen for performance reasons. That why we decided to use Interception Observer.
+We don't want to use scroll events to detect when an element becomes sticky on the screen for performance reasons. That why we decided to use Intersection Observer.
 
-The Interception Observer is preferably applied to an element that has a scroll and it detects when a child element enters or exits the screen. So we add an invisible sentinel element to that scroll container and when it exists the screen we know when the sticky element start to be sticky, when the sentinel enters again the sticky element is not longer sticky. In our demo you can toggle the visibility of the sentinel and check how the intersection occurs.
+The Intersection Observer is preferably applied to an element that has a scroll and it detects when a child element enters or exits the screen. So we add an invisible sentinel element to that scroll container and when it exists the screen we know when the sticky element start to be sticky, when the sentinel enters again the sticky element is not longer sticky. In our demo you can toggle the visibility of the sentinel and check how the intersection occurs.
 
 The intention of this directive is to implement the article [An event for CSS position:sticky](https://developers.google.com/web/updates/2017/09/sticky-headers) in an Angular way.
 
+> The Intersection Observer API is highly [supported](https://caniuse.com/#feat=intersectionobserver) across the different browsers, however if you have a target audience that is not currently being supported you can use the [Intersection Observer Polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill)
+
 ### References
+
 - [An event for CSS position:sticky](https://developers.google.com/web/updates/2017/09/sticky-headers)
 - [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Creating_an_intersection_observer)
-
 
 ## Development tips
 
