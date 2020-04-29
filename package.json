@@ -2,7 +2,7 @@
   "name": "ngx-sticky-demo",
   "version": "0.0.0",
   "scripts": {
-    "release": "standard-version",
+    "release": "cd projects/sticky-directive && standard-version",
     "commit": "npx git-cz",
     "ng": "ng",
     "start": "ng serve",
