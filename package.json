@@ -51,7 +51,6 @@
     "@nguniversal/module-map-ngfactory-loader": "~7.1.1",
     "core-js": "^2.6.2",
     "express": "^4.15.2",
-    "intersection-observer": "^0.7.0",
     "ngx-semantic-version": "^1.2.1",
     "ngx-sticky-directive": "latest",
     "rxjs": "~6.3.3",
