@@ -270,4 +270,32 @@ describe('StickyDirective', () => {
       );
     });
   });
+
+  describe('Intersection Observer Support', () => {
+    let IntersectionObserverBackup;
+    let w: any; // * used to avoid type error Property 'IntersectionObserver' does not exist on type 'Window'
+
+    beforeEach(() => {
+      w = window;
+      IntersectionObserverBackup = w.IntersectionObserver;
+      w.IntersectionObserver = undefined;
+    });
+
+    afterEach(() => {
+      w.IntersectionObserver = IntersectionObserverBackup;
+    });
+
+    it('should NOT create Intersection Observer when NO supported', () => {
+      TestBed.createComponent(DummyComponent);
+      let error;
+
+      try {
+        fixture.detectChanges();
+      } catch (e) {
+        error = e;
+      } finally {
+        expect(error).toBeUndefined();
+      }
+    });
+  });
 });

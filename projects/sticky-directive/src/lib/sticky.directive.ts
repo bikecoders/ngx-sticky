@@ -86,10 +86,7 @@ export class StickyDirective implements OnInit, AfterViewInit {
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: object,
     private stickyElement: ElementRef,
-  ) {
-    // Import the Intersection Observer polyfill
-    require('intersection-observer');
-  }
+  ) { }
 
   ngOnInit(): void {
     this.makeSticky();
@@ -97,9 +94,13 @@ export class StickyDirective implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.putSentinel();
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.intersectionObserverExists()) {
       this.setObserver();
     }
+  }
+
+  private intersectionObserverExists() {
+    return 'IntersectionObserver' in window;
   }
 
   /**

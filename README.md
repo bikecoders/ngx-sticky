@@ -184,11 +184,13 @@ Adding a custom class when an element becomes sticky is the objective of this di
 
 ## How it works
 
-We don't want to use scroll events to detect when an element becomes sticky on the screen for performance reasons. That why we decided to use Interception Observer.
+We don't want to use scroll events to detect when an element becomes sticky on the screen for performance reasons. That why we decided to use Intersection Observer.
 
-The Interception Observer is preferably applied to an element that has a scroll and it detects when a child element enters or exits the screen. So we add an invisible sentinel element to that scroll container and when it exists the screen we know when the sticky element start to be sticky, when the sentinel enters again the sticky element is not longer sticky. In our demo you can toggle the visibility of the sentinel and check how the intersection occurs.
+The Intersection Observer is preferably applied to an element that has a scroll and it detects when a child element enters or exits the screen. So we add an invisible sentinel element to that scroll container and when it exists the screen we know when the sticky element start to be sticky, when the sentinel enters again the sticky element is not longer sticky. In our demo you can toggle the visibility of the sentinel and check how the intersection occurs.
 
 The intention of this directive is to implement the article [An event for CSS position:sticky](https://developers.google.com/web/updates/2017/09/sticky-headers) in an Angular way.
+
+> The Intersection Observer API is highly [supported](https://caniuse.com/#feat=intersectionobserver) across the different browsers, however if you have a target audience that is not currently being supported you can use the [Intersection Observer Polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill)
 
 ### References
 - [An event for CSS position:sticky](https://developers.google.com/web/updates/2017/09/sticky-headers)
