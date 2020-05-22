@@ -31,7 +31,11 @@
     "dev:ssr": "ng run demo:serve-ssr",
     "serve:ssr": "node dist/demo/server/main.js",
     "build:ssr": "ng build --prod && ng run demo:server:production",
-    "prerender": "ng run demo:prerender"
+    "prerender": "ng run demo:prerender",
+    "ci:lib:test:coverage": "nx test ngx-sticky-directive --codeCoverage --browsers=ChromeHeadless",
+    "ci:lib:lint:report": "nx lint ngx-sticky-directive --format json | sed -n '2!p' > reports/lint_issues.json",
+    "ci:sonar": "sonar-scanner",
+    "sonar:local": "npm run ci:lib:lint:report && cross-env SONAR_QUBE=1 npm run ci:lib:test:coverage && sonar-scanner"
   },
   "private": true,
   "dependencies": {
@@ -71,6 +75,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "~5.0.1",
     "commitizen": "^4.0.3",
+    "cross-env": "^7.0.2",
     "cypress": "^4.1.0",
     "cz-conventional-changelog": "^3.0.2",
     "dotenv": "6.2.0",
@@ -85,8 +90,10 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-sonarqube-unit-reporter": "0.0.21",
     "ng-packagr": "^9.0.0",
     "prettier": "1.19.1",
+    "sonar-scanner": "^3.1.0",
     "standard-version": "^7.0.0",
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",
