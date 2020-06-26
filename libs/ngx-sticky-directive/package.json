@@ -1,0 +1,34 @@
+{
+  "name": "ngx-sticky-directive",
+  "version": "2.0.0",
+  "license": "MIT",
+  "description": "Angular directive that adds sticky position to an HTML element and also applies and remove a custom class when the element is sticky positioned",
+  "keywords": [
+    "angular library",
+    "angular",
+    "library",
+    "ngx",
+    "sticky",
+    "sticky element",
+    "Intersection Observer"
+  ],
+  "repository": {
+    "url": "https://github.com/bikecoders/ngx-sticky.git",
+    "type": "git"
+  },
+  "author": "BikeCoders <bikecoders@gmail.com> (https://github.com/bikecoders)",
+  "collaborators": [
+    "Diego Juliao <dianjuar@gmail.com> (https://github.com/dianjuar)",
+    "Yossely Mendoza <yossely7@gmail.com> (https://github.com/yossely)"
+  ],
+  "bugs": {
+    "url": "https://github.com/bikecoders/ngx-sticky/issues"
+  },
+  "peerDependencies": {
+    "@angular/common": "^9.1.1",
+    "@angular/core": "^9.1.1",
+    "tslib": "^1.10.0"
+  },
+  "homepage": "https://github.com/bikecoders/ngx-sticky#readme",
+  "readmeFilename": "README.md"
+}
