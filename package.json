@@ -94,7 +94,7 @@
     "ng-packagr": "^9.0.0",
     "prettier": "1.19.1",
     "sonar-scanner": "^3.1.0",
-    "standard-version": "^7.0.0",
+    "standard-version": "^8.0.1",
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
