@@ -91,7 +91,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-sonarqube-unit-reporter": "0.0.21",
-    "ng-packagr": "^9.0.0",
+    "ng-packagr": "^10.1.1",
     "prettier": "1.19.1",
     "sonar-scanner": "^3.1.0",
     "standard-version": "^7.0.0",
